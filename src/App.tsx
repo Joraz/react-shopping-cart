@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Items } from "./components/Items";
+import { MenuBar } from "./components/MenuBar";
+import { store } from "./store/store";
+import { Cart } from "./components/Cart";
+import { ThemeProvider } from "@material-ui/core";
+import theme from "./theme";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <MenuBar />
+          <Switch>
+            <Route exact path="/">
+              <Items />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
